@@ -6,5 +6,15 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    //
+    /**
+	* Handler of post requests for sharing posts.
+    **/
+    public function store(Request $request, Post $post)
+    {
+        $newPost = $request->user()->posts()->create([
+            'body' => $request->get('body')
+        ]);
+   
+        return response()->json($post->with('user')->find($newPost->id));
+    }
 }
