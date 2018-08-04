@@ -4,10 +4,6 @@
 <div class="container">
     <form-component></form-component>
     <br>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            Timeline
-        </div>
-    </div>
+    <timeline-component></timeline-component>
 </div>
 @endsection

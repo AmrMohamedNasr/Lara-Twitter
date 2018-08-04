@@ -33,22 +33,28 @@
     </div>
 </template>
 <script>
-export default {
-    data() {
-        return {
-            body : ''
-        }
-    },
-    methods: {
-        saveTweet() {
-            axios.post('/posts', {
-                body: this.body
-            }).then(res => {
-                console.log(res.data);
-            }).catch(e => {
-                console.log(e);
-            });
+    import Event from '../event.js';
+    
+    export default {
+        data() {
+            return {
+                body : '',
+                postData : {}
+            }
+        },
+        methods: {
+            saveTweet() {
+                axios.post('/posts', {
+                    body: this.body
+                }).then(res => {
+                    this.postData = res.data;
+                    Event.$emit('added_post', this.postData);
+                    console.log(res.data);
+                }).catch(e => {
+                    console.log(e);
+                });
+                this.body = '';
+            }
         }
     }
-}
 </script>
