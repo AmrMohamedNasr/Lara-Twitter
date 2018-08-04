@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/posts', 'PostController@store')->name('posts.store');
 Route::get('/posts', 'PostController@fetch')->name('posts.fetch');
+Route::get('/verify-user/{code}', 'Auth\RegisterController@activateUser')->name('activate.user');
