@@ -2,15 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 posts">
             <h1 v-if="!posts.length" style='text-align: center;'>No posts</h1>
-            <div class="media" v-for="post in posts" :key="post.id">
-                <img class="mr-3" />
-                <div class="media-body">
-                    <div class="mt-3">
-                        <a href="#">{{ post.user.name }}</a> | {{ post.createdDate }}
-                    </div>
-                    <p>{{ post.body }}</p>
-                </div>
-            </div>
+            <post-component v-for="post in posts" v-bind:post="post" v-bind:key="post.id"></post-component>
         </div>
     </div>
 </template>
