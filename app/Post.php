@@ -15,7 +15,7 @@ class Post extends Model
     /**
 	* Relation to the user model.
     **/
-    public function users() {
+    public function user() {
     	return $this->belongsTo(User::class);
     }
 }
