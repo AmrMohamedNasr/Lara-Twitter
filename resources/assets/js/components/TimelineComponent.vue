@@ -22,16 +22,34 @@ export default {
     data() {
         return {
             posts: [],
-            post: {}
+            post: {},
+            offset: 0
+        }
+    },
+    methods : {
+        handleScroll () {
+            if ($(window).scrollTop() == ($(document).height() - $(window).height())) {
+                this.fetchPosts();
+            }
+        },
+        fetchPosts() {
+            axios.get('/posts', {params : { offset : this.offset }}).then((resp => {
+                if (resp.data !== undefined && resp.data.length > 0) {
+                    this.posts = this.posts.concat(resp.data);
+                    this.offset++;
+                }
+            }));
         }
     },
     mounted() {
-        axios.get('/posts').then((resp => {
-            this.posts = resp.data;
-        }));
+        this.fetchPosts();
         Event.$on('added_post', (post) => {
             this.posts.unshift(post);
         });
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
 }
 </script>

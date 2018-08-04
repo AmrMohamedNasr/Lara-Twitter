@@ -47584,18 +47584,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             posts: [],
-            post: {}
+            post: {},
+            offset: 0
         };
     },
-    mounted: function mounted() {
-        var _this = this;
 
-        axios.get('/posts').then(function (resp) {
-            _this.posts = resp.data;
-        });
+    methods: {
+        handleScroll: function handleScroll() {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                this.fetchPosts();
+            }
+        },
+        fetchPosts: function fetchPosts() {
+            var _this = this;
+
+            axios.get('/posts', { params: { offset: this.offset } }).then(function (resp) {
+                if (resp.data !== undefined && resp.data.length > 0) {
+                    _this.posts = _this.posts.concat(resp.data);
+                    _this.offset++;
+                }
+            });
+        }
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        this.fetchPosts();
         __WEBPACK_IMPORTED_MODULE_0__event_js__["a" /* default */].$on('added_post', function (post) {
-            _this.posts.unshift(post);
+            _this2.posts.unshift(post);
         });
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed: function destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
 });
 

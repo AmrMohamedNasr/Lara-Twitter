@@ -7,6 +7,7 @@ use App\Post;
 
 class PostController extends Controller
 {
+	const SINGLE_FETCH_SIZE = 10;
     /**
 	* Handler of post requests for sharing posts.
     **/
@@ -23,7 +24,11 @@ class PostController extends Controller
     * Handler of get requests to see posts by friends.
     **/
     public function fetch(Request $request, Post $post) {
-    	$posts = $post->with('user')->orderBy('created_at', 'desc')->take($request->get('limit', 10))->get();
+    	$offset = $request->get('offset');
+    	$posts = $post->with('user')->orderBy('created_at', 'desc')
+    		->skip(self::SINGLE_FETCH_SIZE * $offset)
+    		->take($request->get('limit', self::SINGLE_FETCH_SIZE))
+    		->get();
   
         return response()->json($posts);
     }
