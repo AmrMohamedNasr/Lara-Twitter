@@ -19,4 +19,12 @@ class PostController extends Controller
    
         return response()->json($post->with('user')->find($newPost->id));
     }
+    /**
+    * Handler of get requests to see posts by friends.
+    **/
+    public function fetch(Request $request, Post $post) {
+    	$posts = $post->with('user')->orderBy('created_at', 'desc')->take($request->get('limit', 10))->get();
+  
+        return response()->json($posts);
+    }
 }
