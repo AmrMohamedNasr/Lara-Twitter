@@ -12,4 +12,20 @@ class UserController extends Controller
     	error_log("here");
         return view('user', compact('user'));
     }
+
+    public function follow(Request $request, User $user)
+	{
+	    if($request->user()->canFollow($user)) {
+	        $request->user()->following()->attach($user);
+	    }
+	    return redirect()->back();
+	}
+
+	public function unFollow(Request $request, User $user)
+	{
+	   if($request->user()->canUnFollow($user)) {
+	       $request->user()->following()->detach($user);
+	    }
+       return redirect()->back();
+	}
 }

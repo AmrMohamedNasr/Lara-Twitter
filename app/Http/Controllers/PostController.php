@@ -25,7 +25,9 @@ class PostController extends Controller
     **/
     public function fetch(Request $request, Post $post) {
     	$offset = $request->get('offset');
-    	$posts = $post->with('user')->orderBy('created_at', 'desc')
+    	$posts = $post->whereIn('user_id', $request->user()->following()
+                        ->pluck('users.id')
+                        ->push($request->user()->id))->with('user')->orderBy('created_at', 'desc')
     		->skip(self::SINGLE_FETCH_SIZE * $offset)
     		->take($request->get('limit', self::SINGLE_FETCH_SIZE))
     		->get();

@@ -7,9 +7,9 @@
             <h3>{{ $user->name }}</h3>
             @if(auth()->user()->isNot($user))
                 @if(auth()->user()->isFollowing($user))
-                    <a href="#" class="btn btn-danger">No Follow</a>
+                    <a href="{{ $user->unfollowLink }}" class="btn btn-danger">Unfollow</a>
                 @else
-                    <a href="#" class="btn btn-success">Follow</a>
+                    <a href="{{ $user->followLink }}" class="btn btn-success">Follow</a>
                 @endif
             @endif
         </div>

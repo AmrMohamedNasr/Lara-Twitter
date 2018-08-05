@@ -31,7 +31,7 @@ class User extends Authenticatable
     *
     * @var array
     **/
-    protected $appends = ['profileLink'];
+    protected $appends = ['profileLink', 'followLink', 'unfollowLink'];
     /**
     * Relation to the post model
     *
@@ -84,5 +84,19 @@ class User extends Authenticatable
             return false;
         }
         return !$this->isFollowing($user);
+    }
+
+    public function canUnFollow($user)
+    {
+        return $this->isFollowing($user);
+    }
+    
+    public function getFollowLinkAttribute()
+    {
+        return route('user.follow', $this);
+    }
+    public function getUnfollowLinkAttribute()
+    {
+        return route('user.unfollow', $this);
     }
 }
