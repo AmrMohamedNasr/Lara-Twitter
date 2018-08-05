@@ -47738,7 +47738,7 @@ var render = function() {
         _c("div", { staticClass: "card-header" }, [
           _c("div", { staticClass: "mt-3" }, [
             _c("div", { staticStyle: { float: "left" } }, [
-              _c("a", { attrs: { href: "#" } }, [
+              _c("a", { attrs: { href: _vm.post.user.profileLink } }, [
                 _vm._v(_vm._s(_vm.post.user.name))
               ])
             ]),

@@ -6,7 +6,7 @@
             	<div class="card-header">
 					<div class="mt-3">
 		                <div style='float:left;'>
-		                	<a href="#">{{ post.user.name }}</a>
+		                	<a :href="post.user.profileLink">{{ post.user.name }}</a>
 		                </div>
 		                <div style='float:right'>
 		                	 {{ post.createdDate }}

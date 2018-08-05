@@ -26,7 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
+    /**
+    * The attributes that are computed from data.
+    *
+    * @var array
+    **/
+    protected $appends = ['profileLink'];
     /**
     * Relation to the post model
     *
@@ -43,5 +48,14 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'username';
+    }
+    /**
+    * Get User's profile link
+    *
+    * @return string
+    **/
+    public function getProfileLinkAttribute()
+    {
+        return route('user.show', $this);
     }
 }
