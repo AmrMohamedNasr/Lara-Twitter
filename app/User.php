@@ -34,4 +34,14 @@ class User extends Authenticatable
     public function posts() {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     **/
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
 }
