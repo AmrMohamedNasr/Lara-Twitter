@@ -47569,7 +47569,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             posts: [],
             post: {},
-            offset: 0
+            time_limit: 0
         };
     },
 
@@ -47582,10 +47582,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fetchPosts: function fetchPosts() {
             var _this = this;
 
-            axios.get('/posts', { params: { offset: this.offset } }).then(function (resp) {
+            axios.get('/posts', { params: { time_limit: this.time_limit } }).then(function (resp) {
                 if (resp.data !== undefined && resp.data.length > 0) {
                     _this.posts = _this.posts.concat(resp.data);
-                    _this.offset++;
+                    _this.time_limit = _this.posts[_this.posts.length - 1].created_at;
                 }
             });
         }

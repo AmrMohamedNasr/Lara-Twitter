@@ -15,7 +15,7 @@ export default {
         return {
             posts: [],
             post: {},
-            offset: 0
+            time_limit: 0
         }
     },
     methods : {
@@ -25,10 +25,10 @@ export default {
             }
         },
         fetchPosts() {
-            axios.get('/posts', {params : { offset : this.offset }}).then((resp => {
+            axios.get('/posts', {params : { time_limit : this.time_limit }}).then((resp => {
                 if (resp.data !== undefined && resp.data.length > 0) {
                     this.posts = this.posts.concat(resp.data);
-                    this.offset++;
+                    this.time_limit = this.posts[this.posts.length - 1].created_at;
                 }
             }));
         }

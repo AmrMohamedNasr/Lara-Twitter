@@ -24,14 +24,16 @@ class PostController extends Controller
     * Handler of get requests to see posts by friends.
     **/
     public function fetch(Request $request, Post $post) {
-    	$offset = $request->get('offset');
-    	$posts = $post->whereIn('user_id', $request->user()->following()
-                        ->pluck('users.id')
-                        ->push($request->user()->id))->with('user')->orderBy('created_at', 'desc')
-    		->skip(self::SINGLE_FETCH_SIZE * $offset)
-    		->take($request->get('limit', self::SINGLE_FETCH_SIZE))
-    		->get();
-  
+    	$limit = $request->get('time_limit');
+    	$temp_post = $post->whereIn('user_id', $request->user()->following()
+	                        ->pluck('users.id')
+	                        ->push($request->user()->id));
+    	if ($limit != 0) {
+	    	$temp_post = $temp_post->where('created_at', '<', $limit);
+  		}
+  		$posts = $temp_post->with('user')->orderBy('created_at', 'desc')
+	    		->take($request->get('limit', self::SINGLE_FETCH_SIZE))
+	    		->get();
         return response()->json($posts);
     }
 }
